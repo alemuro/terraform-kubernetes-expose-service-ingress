@@ -60,7 +60,8 @@ On the following example we are deploying Wordpress stack with:
 
 ```
 module "wordpress" {
-  source = "./modules/service-with-ingress/"
+  source  = "alemuro/expose-service-ingress/kubernetes"
+  version = "1.1.0"
 
   name           = "wordpress-example"
   image          = "wordpress:5"
@@ -78,7 +79,8 @@ module "wordpress" {
 }
 
 module "database" {
-  source = "./modules/service-with-ingress/"
+  source  = "alemuro/expose-service-ingress/kubernetes"
+  version = "1.1.0"
 
   name           = "database"
   image          = "mariadb"
@@ -93,7 +95,8 @@ module "database" {
 }
 
 module "phpmyadmin" {
-  source = "./modules/service-with-ingress/"
+  source  = "alemuro/expose-service-ingress/kubernetes"
+  version = "1.1.0"
 
   name           = "phpmyadmin"
   image          = "phpmyadmin"
