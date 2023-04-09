@@ -2,7 +2,7 @@ resource "kubernetes_ingress_v1" "https" {
   count = (length(var.domains) > 0) ? 1 : 0
 
   metadata {
-    name = "${var.name}-https"
+    name      = "${var.name}-https"
     namespace = var.namespace
     labels = {
       k8s-app = var.name

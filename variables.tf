@@ -22,6 +22,11 @@ variable "namespace" {
   description = "Kubernetes namespace where resources must be created."
   default     = "default"
 }
+variable "node_selector" {
+  type        = map(string)
+  description = "Node selector to use when deploying the container."
+  default     = null
+}
 variable "container_port" {
   type        = string
   description = "Container port where to send to requests to."
