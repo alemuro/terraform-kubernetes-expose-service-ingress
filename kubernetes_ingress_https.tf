@@ -3,6 +3,10 @@ resource "kubernetes_ingress_v1" "https" {
 
   metadata {
     name = "${var.name}-https"
+    namespace = var.namespace
+    labels = {
+      k8s-app = var.name
+    }
 
     annotations = {
       "traefik.ingress.kubernetes.io/router.entrypoints"      = "websecure"

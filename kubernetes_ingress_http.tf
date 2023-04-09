@@ -3,6 +3,10 @@ resource "kubernetes_ingress_v1" "http" {
 
   metadata {
     name = "${var.name}-http"
+    namespace = var.namespace
+    labels = {
+      k8s-app = var.name
+    }
 
     annotations = {
       "traefik.ingress.kubernetes.io/router.entrypoints" = "web"
