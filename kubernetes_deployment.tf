@@ -25,6 +25,8 @@ resource "kubernetes_deployment" "deployment" {
 
       spec {
 
+        node_selector = var.node_selector
+
         dynamic "volume" {
           for_each = var.paths
           content {
