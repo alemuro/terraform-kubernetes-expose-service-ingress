@@ -1,4 +1,4 @@
-resource "kubernetes_ingress" "https" {
+resource "kubernetes_ingress_v1" "https" {
   count = (length(var.domains) > 0) ? 1 : 0
 
   metadata {
@@ -12,11 +12,6 @@ resource "kubernetes_ingress" "https" {
   }
 
   spec {
-    backend {
-      service_name = var.name
-      service_port = "http"
-    }
-
     tls {
       hosts = var.domains
     }
@@ -29,8 +24,12 @@ resource "kubernetes_ingress" "https" {
           path {
             path = "/"
             backend {
-              service_name = var.name
-              service_port = "http"
+              service {
+                name = var.name
+                port {
+                  name = "http"
+                }
+              }
             }
           }
         }
