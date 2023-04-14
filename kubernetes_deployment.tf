@@ -62,6 +62,11 @@ resource "kubernetes_deployment" "deployment" {
               mount_path = volume_mount.value
             }
           }
+
+          resources {
+              limits   = var.resources.limits
+              requests = var.resources.requests
+          }
         }
       }
     }

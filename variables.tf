@@ -42,3 +42,14 @@ variable "environment_variables" {
   description = "Map with environment variables injected to the containers."
   default     = {}
 }
+variable "resources" {
+  type        = object({
+    limits   = map(string)
+    requests = map(string)
+  })
+  description = "Map with resources limits and requests."
+  default     = {
+    limits   = {}
+    requests = {}
+  }
+}
