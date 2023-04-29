@@ -16,6 +16,14 @@ resource "kubernetes_deployment" "deployment" {
       }
     }
 
+    // When using host_port mode, recreate container
+    dynamic "strategy" {
+      for_each = var.host_port != null ? [1] : []
+      content {
+        type = "Recreate"
+      }
+    }
+
     template {
       metadata {
         labels = {
@@ -53,6 +61,7 @@ resource "kubernetes_deployment" "deployment" {
             container_port = var.container_port
             name           = "http"
             protocol       = "TCP"
+            host_port      = var.host_port
           }
 
           dynamic "volume_mount" {
@@ -63,9 +72,18 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
 
+          dynamic "security_context" {
+            for_each = length(var.capabilities_add) > 0 ? [1] : []
+            content {
+              capabilities {
+                add = var.capabilities_add
+              }
+            }
+          }
+
           resources {
-              limits   = var.resources.limits
-              requests = var.resources.requests
+            limits   = var.resources.limits
+            requests = var.resources.requests
           }
         }
       }

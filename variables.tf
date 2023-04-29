@@ -43,13 +43,23 @@ variable "environment_variables" {
   default     = {}
 }
 variable "resources" {
-  type        = object({
+  type = object({
     limits   = map(string)
     requests = map(string)
   })
   description = "Map with resources limits and requests."
-  default     = {
+  default = {
     limits   = {}
     requests = {}
   }
+}
+variable "capabilities_add" {
+  type        = list(string)
+  description = "List of capabilities to add to the container."
+  default     = []
+}
+variable "host_port" {
+  type        = string
+  description = "Host port where to send to requests to."
+  default     = null
 }

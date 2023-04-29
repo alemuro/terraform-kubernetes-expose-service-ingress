@@ -47,6 +47,8 @@ No modules.
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
 | <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
 | <a name="input_service_port"></a> [service\_port](#input\_service\_port) | Port configured on the service side to receive requests (routed to the container port). | `string` | `"80"` | no |
+| <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container | `list(string)` | `[]` | no |
+| <a name="host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
 
 ## Outputs
 
