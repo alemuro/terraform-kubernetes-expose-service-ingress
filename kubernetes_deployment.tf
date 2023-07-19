@@ -64,6 +64,16 @@ resource "kubernetes_deployment" "deployment" {
             host_port      = var.host_port
           }
 
+          dynamic "port" {
+            for_each = var.pod_additional_ports
+            content {
+              container_port = port.value.container_port
+              name           = port.value.name
+              protocol       = port.value.protocol
+              host_port      = port.value.host_port
+            }
+          }
+
           dynamic "volume_mount" {
             for_each = var.paths
             content {

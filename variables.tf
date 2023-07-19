@@ -63,3 +63,13 @@ variable "host_port" {
   description = "Host port where to send to requests to."
   default     = null
 }
+variable "pod_additional_ports" {
+  type = list(object({
+    name           = string
+    container_port = string
+    host_port      = string
+    protocol       = string
+  }))
+  description = "List of additional ports to expose on the pod."
+  default     = []
+}

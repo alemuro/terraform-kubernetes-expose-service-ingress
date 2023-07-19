@@ -1,6 +1,6 @@
 # Terraform Module for exposing a service through an Ingress
 
-This module provides an easy way to deploy pods and to expose them to the Internet by configuring the proper service and ingresses. 
+This module provides an easy way to deploy pods and to expose them to the Internet by configuring the proper service and ingresses.
 It has been designed to allow pods with only one container. See examples below.
 
 This module has been designed to work on a K3S cluster with Traefik and files stored locally.
@@ -36,19 +36,20 @@ No modules.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. | `string` | `"80"` | no |
-| <a name="input_domains"></a> [domains](#input\_domains) | List of domains that should be configured to route traffic from. | `list(string)` | `[]` | no |
-| <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers. | `map(any)` | `{}` | no |
-| <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
-| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
-| <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
-| <a name="input_service_port"></a> [service\_port](#input\_service\_port) | Port configured on the service side to receive requests (routed to the container port). | `string` | `"80"` | no |
-| <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container | `list(string)` | `[]` | no |
-| <a name="host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
+| Name                                                                                                | Description                                                                             | Type           | Default     | Required |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------- | ----------- | :------: |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port)                      | Container port where to send to requests to.                                            | `string`       | `"80"`      |    no    |
+| <a name="input_domains"></a> [domains](#input\_domains)                                             | List of domains that should be configured to route traffic from.                        | `list(string)` | `[]`        |    no    |
+| <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers.                              | `map(any)`     | `{}`        |    no    |
+| <a name="input_image"></a> [image](#input\_image)                                                   | Image name and tag to deploy.                                                           | `string`       | n/a         |   yes    |
+| <a name="input_name"></a> [name](#input\_name)                                                      | Name used to identify deployed container and all related resources.                     | `string`       | n/a         |   yes    |
+| <a name="input_namespace"></a> [namespace](#input\_namespace)                                       | Kubernetes namespace where resources must be created.                                   | `string`       | `"default"` |    no    |
+| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector)                         | Node selector to use when deploying the container.                                      | `map(string)`  | `null`      |    no    |
+| <a name="input_paths"></a> [paths](#input\_paths)                                                   | Object mapping local paths to container paths                                           | `map(any)`     | `{}`        |    no    |
+| <a name="input_service_port"></a> [service\_port](#input\_service\_port)                            | Port configured on the service side to receive requests (routed to the container port). | `string`       | `"80"`      |    no    |
+| <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add)                      | List of capabilities to add to the container                                            | `list(string)` | `[]`        |    no    |
+| <a name="host_port"></a> [host\_port](#input\_host\_port)                                           | Host port where to send to requests to.                                                 | `string`       | `null`      |    no    |
+| <a name="pod_additional_ports"></a> [pod\_additional\_ports](#pod\_additional\_ports)               |  List of additional ports to expose on the pod.                                         | list(object()) | `[]`        |    no    |
 
 ## Outputs
 
@@ -56,7 +57,7 @@ No outputs.
 
 ## Examples
 
-On the following example we are deploying Wordpress stack with: 
+On the following example we are deploying Wordpress stack with:
 * 1 x Wordpress: All data is stored on a local folder.
 * 1 x MariaDB (MySQL) database. All data is stored on a local folder.
 * 1 x PHPMyAdmin
