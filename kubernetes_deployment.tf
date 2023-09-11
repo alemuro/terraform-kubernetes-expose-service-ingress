@@ -45,6 +45,13 @@ resource "kubernetes_deployment" "deployment" {
           }
         }
 
+        dynamic "image_pull_secrets" {
+          for_each = var.image_pull_secret != "" ? [1] : []
+          content {
+            name = var.image_pull_secret
+          }
+        }
+
         container {
           image = var.image
           name  = var.name

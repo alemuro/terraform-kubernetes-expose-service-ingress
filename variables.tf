@@ -73,3 +73,8 @@ variable "pod_additional_ports" {
   description = "List of additional ports to expose on the pod."
   default     = []
 }
+variable "image_pull_secret" {
+  type        = string
+  description = "Kubernetes secret storing registry credentials."
+  default     = ""
+}
