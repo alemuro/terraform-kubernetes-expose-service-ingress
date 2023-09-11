@@ -50,6 +50,7 @@ No modules.
 | <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add)                      | List of capabilities to add to the container                                            | `list(string)` | `[]`        |    no    |
 | <a name="host_port"></a> [host\_port](#input\_host\_port)                                           | Host port where to send to requests to.                                                 | `string`       | `null`      |    no    |
 | <a name="pod_additional_ports"></a> [pod\_additional\_ports](#pod\_additional\_ports)               |  List of additional ports to expose on the pod.                                         | list(object()) | `[]`        |    no    |
+| <a name="image_pull_secret"></a> [image\_pull\_secret](#image\_pull\_secret)               |  Kubernetes secret storing registry credentials.                                         | string | `""`        |    no    |
 
 ## Outputs
 
