@@ -58,6 +58,11 @@ variable "capabilities_add" {
   description = "List of capabilities to add to the container."
   default     = []
 }
+variable "supplemental_groups" {
+  type        = list(string)
+  description = "List of supplemental groups to add to the container."
+  default     = []
+}
 variable "host_port" {
   type        = string
   description = "Host port where to send to requests to."

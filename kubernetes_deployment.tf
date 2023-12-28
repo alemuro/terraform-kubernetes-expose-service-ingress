@@ -52,6 +52,13 @@ resource "kubernetes_deployment" "deployment" {
           }
         }
 
+        dynamic "security_context" {
+          for_each = length(var.supplemental_groups) > 0 ? [1] : []
+          content {
+            supplemental_groups = var.supplemental_groups
+          }
+        }
+
         container {
           image = var.image
           name  = var.name
