@@ -83,3 +83,25 @@ variable "image_pull_secret" {
   description = "Kubernetes secret storing registry credentials."
   default     = ""
 }
+
+variable "annotations" {
+  type = object({
+    ingress = map(string)
+  })
+  description = "Annotations added to some components. Only ingress supported at the moment."
+  default = {
+    ingress = {}
+  }
+}
+
+variable "http" {
+  type        = bool
+  description = "Whether to create an ingress for HTTP traffic."
+  default     = true
+}
+
+variable "https" {
+  type        = bool
+  description = "Whether to create an ingress for HTTPS traffic."
+  default     = true
+}

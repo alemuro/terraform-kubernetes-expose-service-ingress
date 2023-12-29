@@ -1,5 +1,5 @@
 resource "kubernetes_ingress_v1" "https" {
-  count = (length(var.domains) > 0) ? 1 : 0
+  count = (length(var.domains) > 0) && var.https ? 1 : 0
 
   metadata {
     name      = "${var.name}-https"
@@ -8,11 +8,11 @@ resource "kubernetes_ingress_v1" "https" {
       k8s-app = var.name
     }
 
-    annotations = {
-      "traefik.ingress.kubernetes.io/router.entrypoints"      = "websecure"
+    annotations = merge(var.annotations["ingress"], {
+      "traefik.ingress.kubernetes.io/router.entrypoints"      = "web,websecure"
       "traefik.ingress.kubernetes.io/router.tls"              = "true"
       "traefik.ingress.kubernetes.io/router.tls.certresolver" = "default"
-    }
+    })
   }
 
   spec {

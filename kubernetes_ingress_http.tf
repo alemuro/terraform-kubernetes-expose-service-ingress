@@ -1,5 +1,5 @@
 resource "kubernetes_ingress_v1" "http" {
-  count = (length(var.domains) > 0) ? 1 : 0
+  count = (length(var.domains) > 0) && var.http ? 1 : 0
 
   metadata {
     name      = "${var.name}-http"
@@ -8,9 +8,9 @@ resource "kubernetes_ingress_v1" "http" {
       k8s-app = var.name
     }
 
-    annotations = {
+    annotations = merge(var.annotations["ingress"], {
       "traefik.ingress.kubernetes.io/router.entrypoints" = "web"
-    }
+    })
   }
 
   spec {
