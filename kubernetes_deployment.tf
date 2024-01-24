@@ -50,9 +50,9 @@ resource "kubernetes_deployment" "deployment" {
         dynamic "volume" {
           for_each = var.pvcs
           content {
-            name = "${var.name}-data-${volume.name}"
+            name = "${var.name}-data-${volume.value.name}"
             persistent_volume_claim {
-              claim_name = volume.name
+              claim_name = volume.value.name
               read_only  = false
             }
           }
@@ -114,10 +114,10 @@ resource "kubernetes_deployment" "deployment" {
           dynamic "volume_mount" {
             for_each = var.pvcs
             content {
-              name       = "${var.name}-data-${volume_mount.name}"
-              mount_path = volume_mount.path
-              sub_path   = volume_mount.sub_path
-              read_only  = volume_mount.read_only
+              name       = "${var.name}-data-${volume_mount.value.name}"
+              mount_path = volume_mount.value.path
+              sub_path   = volume_mount.value.sub_path
+              read_only  = volume_mount.value.read_only
             }
           }
 
