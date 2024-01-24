@@ -50,9 +50,9 @@ resource "kubernetes_deployment" "deployment" {
         dynamic "volume" {
           for_each = var.pvcs
           content {
-            name = "${var.name}-data-${volume.key}"
+            name = "${var.name}-data-${volume.name}"
             persistent_volume_claim {
-              claim_name = volume.key
+              claim_name = volume.name
               read_only  = false
             }
           }
@@ -101,11 +101,23 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
 
+          // Host path volumes
           dynamic "volume_mount" {
-            for_each = merge(var.paths, var.pvcs)
+            for_each = var.paths
             content {
               name       = "${var.name}-data-${replace(volume_mount.key, "/", "-")}"
               mount_path = volume_mount.value
+            }
+          }
+
+          // PVCs volumes
+          dynamic "volume_mount" {
+            for_each = var.pvcs
+            content {
+              name       = "${var.name}-data-${volume_mount.name}"
+              mount_path = volume_mount.path
+              sub_path   = volume_mount.sub_path
+              read_only  = volume_mount.read_only
             }
           }
 
