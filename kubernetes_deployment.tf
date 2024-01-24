@@ -1,3 +1,8 @@
+locals {
+  // Get a list of unique PVCs to create a single volume block per PVC
+  unique_pvcs = distinct([for pvc in var.pvcs : pvc.name])
+}
+
 resource "kubernetes_deployment" "deployment" {
   metadata {
     name      = var.name
@@ -48,11 +53,11 @@ resource "kubernetes_deployment" "deployment" {
 
         // PVCs volumes
         dynamic "volume" {
-          for_each = var.pvcs
+          for_each = local.unique_pvcs
           content {
-            name = "${var.name}-data-${volume.value.name}"
+            name = "${var.name}-data-${volume.value}"
             persistent_volume_claim {
-              claim_name = volume.value.name
+              claim_name = volume.value
               read_only  = false
             }
           }
