@@ -86,11 +86,13 @@ variable "image_pull_secret" {
 
 variable "annotations" {
   type = object({
-    ingress = map(string)
+    ingress = optional(map(string), {})
+    service = optional(map(string), {})
   })
   description = "Annotations added to some components. Only ingress supported at the moment."
   default = {
     ingress = {}
+    service = {}
   }
 }
 

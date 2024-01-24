@@ -5,6 +5,8 @@ resource "kubernetes_service" "service" {
     labels = {
       k8s-app = var.name
     }
+
+    annotations = var.annotations["service"]
   }
   spec {
     selector = {
