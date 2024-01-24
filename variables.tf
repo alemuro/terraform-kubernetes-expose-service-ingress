@@ -12,8 +12,13 @@ variable "paths" {
   default     = {}
 }
 variable "pvcs" {
-  type        = map(any)
-  description = "Object mapping pvcs to container paths"
+  type = list(object({
+    name      = string
+    path      = string
+    sub_path  = optional(string, "")
+    read_only = optional(bool, false)
+  }))
+  description = "Object that contains the list of PVCs to mount in the container"
   default     = {}
 }
 variable "domains" {
