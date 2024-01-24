@@ -82,7 +82,8 @@ module "wordpress" {
     "/opt/k3s/wordpress-example" = "/var/www/html"
   }
   pvcs = {
-    "pvc-name" = "/tmp/pvc-example"
+    name = "pvc-name" 
+    path = "/tmp/pvc-example"
   }
   environment_variables = {
     WORDPRESS_DB_HOST     = "database"

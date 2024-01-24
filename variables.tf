@@ -19,7 +19,7 @@ variable "pvcs" {
     read_only = optional(bool, false)
   }))
   description = "Object that contains the list of PVCs to mount in the container"
-  default     = {}
+  default     = []
 }
 variable "domains" {
   type        = list(string)
