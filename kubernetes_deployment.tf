@@ -35,12 +35,25 @@ resource "kubernetes_deployment" "deployment" {
 
         node_selector = var.node_selector
 
+        // Host path volumes
         dynamic "volume" {
           for_each = var.paths
           content {
             name = "${var.name}-data-${replace(volume.key, "/", "-")}"
             host_path {
               path = volume.key
+            }
+          }
+        }
+
+        // PVCs volumes
+        dynamic "volume" {
+          for_each = var.pvcs
+          content {
+            name = "${var.name}-data-${volume.key}"
+            persistent_volume_claim {
+              claim_name = volume.key
+              read_only  = false
             }
           }
         }
@@ -89,7 +102,7 @@ resource "kubernetes_deployment" "deployment" {
           }
 
           dynamic "volume_mount" {
-            for_each = var.paths
+            for_each = merge(var.paths, var.pvcs)
             content {
               name       = "${var.name}-data-${replace(volume_mount.key, "/", "-")}"
               mount_path = volume_mount.value

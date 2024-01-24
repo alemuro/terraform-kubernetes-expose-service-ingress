@@ -46,6 +46,7 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace)                                       | Kubernetes namespace where resources must be created.                                   | `string`       | `"default"` |    no    |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector)                         | Node selector to use when deploying the container.                                      | `map(string)`  | `null`      |    no    |
 | <a name="input_paths"></a> [paths](#input\_paths)                                                   | Object mapping local paths to container paths                                           | `map(any)`     | `{}`        |    no    |
+| <a name="input_pvcs"></a> [pvcs](#input\_pvcs)                                                      | Object mapping PVCs to container paths                                                  | `map(any)`     | `{}`        |    no    |
 | <a name="input_service_port"></a> [service\_port](#input\_service\_port)                            | Port configured on the service side to receive requests (routed to the container port). | `string`       | `"80"`      |    no    |
 | <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add)                      | List of capabilities to add to the container                                            | `list(string)` | `[]`        |    no    |
 | <a name="supplemental_groups"></a> [supplemental\_groups](#input\_supplemental\_groups)                   | List of groups where user should be added into                                         | `list(string)` | `[]`        |    no    |
@@ -56,7 +57,6 @@ No modules.
 | <a name="http"></a> [http](#http)                                               | Whether to create an ingress for HTTP traffic.                                            | `bool`  | `true`        |    no    |
 | <a name="https"></a> [https](#https)                                               | Whether to create an ingress for HTTPs traffic.                                            | `bool`  | `true`        |    no    |
 
-
 ## Outputs
 
 No outputs.
@@ -64,6 +64,7 @@ No outputs.
 ## Examples
 
 On the following example we are deploying Wordpress stack with:
+
 * 1 x Wordpress: All data is stored on a local folder.
 * 1 x MariaDB (MySQL) database. All data is stored on a local folder.
 * 1 x PHPMyAdmin
@@ -79,6 +80,9 @@ module "wordpress" {
   container_port = "80"
   paths = {
     "/opt/k3s/wordpress-example" = "/var/www/html"
+  }
+  pvcs = {
+    "pvc-name" = "/tmp/pvc-example"
   }
   environment_variables = {
     WORDPRESS_DB_HOST     = "database"

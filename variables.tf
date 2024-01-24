@@ -11,7 +11,11 @@ variable "paths" {
   description = "Object mapping local paths to container paths"
   default     = {}
 }
-
+variable "pvcs" {
+  type        = map(any)
+  description = "Object mapping pvcs to container paths"
+  default     = {}
+}
 variable "domains" {
   type        = list(string)
   description = "List of domains that should be configured to route traffic from."
