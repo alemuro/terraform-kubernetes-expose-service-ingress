@@ -1,0 +1,39 @@
+sections:
+  show:
+    - header
+    - providers
+    - inputs
+    - outputs
+sort:
+  enabled: true
+  by: required
+content: |
+  # Terraform Module for exposing a service through an Ingress
+
+  This module provides an easy way to deploy pods and to expose them to the Internet by configuring the proper service and ingresses.
+  It has been designed to allow pods with only one container. See examples below.
+
+  This module has been designed to work on a K3S cluster with Traefik and files stored locally.
+
+  ### Supported Ingresses
+
+  Currently there is only one ingress supported. Feel free to open PR's to add support for others:
+
+  * Traefik
+
+  {{ .Providers }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  ## Examples
+
+  On the following example we are deploying Wordpress stack with:
+  * 1 x Wordpress: All data is stored on a local folder.
+  * 1 x MariaDB (MySQL) database. All data is stored on a local folder.
+  * 1 x PHPMyAdmin
+
+  ```hcl
+  {{ include "examples/wordpress/main.tf" }}
+  ```

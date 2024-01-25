@@ -1,3 +1,4 @@
+<!-- BEGIN_TF_DOCS -->
 # Terraform Module for exposing a service through an Ingress
 
 This module provides an easy way to deploy pods and to expose them to the Internet by configuring the proper service and ingresses.
@@ -11,51 +12,35 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 
 * Traefik
 
-## Requirements
-
-No requirements.
-
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | n/a |
 
-## Modules
-
-No modules.
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [kubernetes_deployment.deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) | resource |
-| [kubernetes_ingress.http](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress) | resource |
-| [kubernetes_ingress.https](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress) | resource |
-| [kubernetes_service.service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) | resource |
-
 ## Inputs
 
-| Name                                                                                                | Description                                                                             | Type           | Default     | Required |
-| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------- | ----------- | :------: |
-| <a name="input_container_port"></a> [container\_port](#input\_container\_port)                      | Container port where to send to requests to.                                            | `string`       | `"80"`      |    no    |
-| <a name="input_domains"></a> [domains](#input\_domains)                                             | List of domains that should be configured to route traffic from.                        | `list(string)` | `[]`        |    no    |
-| <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers.                              | `map(any)`     | `{}`        |    no    |
-| <a name="input_image"></a> [image](#input\_image)                                                   | Image name and tag to deploy.                                                           | `string`       | n/a         |   yes    |
-| <a name="input_name"></a> [name](#input\_name)                                                      | Name used to identify deployed container and all related resources.                     | `string`       | n/a         |   yes    |
-| <a name="input_namespace"></a> [namespace](#input\_namespace)                                       | Kubernetes namespace where resources must be created.                                   | `string`       | `"default"` |    no    |
-| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector)                         | Node selector to use when deploying the container.                                      | `map(string)`  | `null`      |    no    |
-| <a name="input_paths"></a> [paths](#input\_paths)                                                   | Object mapping local paths to container paths                                           | `map(any)`     | `{}`        |    no    |
-| <a name="input_pvcs"></a> [pvcs](#input\_pvcs)                                                      | Object that contains the list of PVCs to mount in the container                         | `map(any)`     | `{}`        |    no    |
-| <a name="input_service_port"></a> [service\_port](#input\_service\_port)                            | Port configured on the service side to receive requests (routed to the container port). | `string`       | `"80"`      |    no    |
-| <a name="capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add)                      | List of capabilities to add to the container                                            | `list(string)` | `[]`        |    no    |
-| <a name="supplemental_groups"></a> [supplemental\_groups](#input\_supplemental\_groups)                   | List of groups where user should be added into                                         | `list(string)` | `[]`        |    no    |
-| <a name="host_port"></a> [host\_port](#input\_host\_port)                                           | Host port where to send to requests to.                                                 | `string`       | `null`      |    no    |
-| <a name="pod_additional_ports"></a> [pod\_additional\_ports](#pod\_additional\_ports)               |  List of additional ports to expose on the pod.                                         | list(object()) | `[]`        |    no    |
-| <a name="image_pull_secret"></a> [image\_pull\_secret](#image\_pull\_secret)               |  Kubernetes secret storing registry credentials.                                         | string | `""`        |    no    |
-| <a name="annotations"></a> [annotations](#annotations)                                               | Annotations added to some components. Only ingress supported at the moment.                                            | `object(map(string))`  | `{ingress={},service={}}`        |    no    |
-| <a name="http"></a> [http](#http)                                               | Whether to create an ingress for HTTP traffic.                                            | `bool`  | `true`        |    no    |
-| <a name="https"></a> [https](#https)                                               | Whether to create an ingress for HTTPs traffic.                                            | `bool`  | `true`        |    no    |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
+| <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress supported at the moment. | <pre>object({<br>    ingress = optional(map(string), {})<br>    service = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "ingress": {},<br>  "service": {}<br>}</pre> | no |
+| <a name="input_capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container. | `list(string)` | `[]` | no |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. | `string` | `"80"` | no |
+| <a name="input_domains"></a> [domains](#input\_domains) | List of domains that should be configured to route traffic from. | `list(string)` | `[]` | no |
+| <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers. | `map(any)` | `{}` | no |
+| <a name="input_host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
+| <a name="input_http"></a> [http](#input\_http) | Whether to create an ingress for HTTP traffic. | `bool` | `true` | no |
+| <a name="input_https"></a> [https](#input\_https) | Whether to create an ingress for HTTPS traffic. | `bool` | `true` | no |
+| <a name="input_image_pull_secret"></a> [image\_pull\_secret](#input\_image\_pull\_secret) | Kubernetes secret storing registry credentials. | `string` | `""` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
+| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
+| <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
+| <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. | <pre>list(object({<br>    name           = string<br>    container_port = string<br>    host_port      = string<br>    protocol       = string<br>  }))</pre> | `[]` | no |
+| <a name="input_pvcs"></a> [pvcs](#input\_pvcs) | Object that contains the list of PVCs to mount in the container | <pre>list(object({<br>    name      = string<br>    path      = string<br>    sub_path  = optional(string, "")<br>    read_only = optional(bool, false)<br>  }))</pre> | `[]` | no |
+| <a name="input_resources"></a> [resources](#input\_resources) | Map with resources limits and requests. | <pre>object({<br>    limits   = map(string)<br>    requests = map(string)<br>  })</pre> | <pre>{<br>  "limits": {},<br>  "requests": {}<br>}</pre> | no |
+| <a name="input_service_port"></a> [service\_port](#input\_service\_port) | Port configured on the service side to receive requests (routed to the container port). | `string` | `"80"` | no |
+| <a name="input_supplemental_groups"></a> [supplemental\_groups](#input\_supplemental\_groups) | List of supplemental groups to add to the container. | `list(string)` | `[]` | no |
 
 ## Outputs
 
@@ -64,12 +49,11 @@ No outputs.
 ## Examples
 
 On the following example we are deploying Wordpress stack with:
-
 * 1 x Wordpress: All data is stored on a local folder.
 * 1 x MariaDB (MySQL) database. All data is stored on a local folder.
 * 1 x PHPMyAdmin
 
-```
+```hcl
 module "wordpress" {
   source  = "alemuro/expose-service-ingress/kubernetes"
   version = "1.1.0"
@@ -124,9 +108,5 @@ module "phpmyadmin" {
     MYSQL_ROOT_PASSWORD = "r@ndomPa$$w0rd!"
   }
 }
-
 ```
-
-## Contributing
-
-Contributors are welcome. Sorry for the poor documentation.
+<!-- END_TF_DOCS -->
