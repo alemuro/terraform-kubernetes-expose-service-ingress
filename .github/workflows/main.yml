@@ -1,13 +1,11 @@
-name: Tag
+name: Main pipeline
 
 on:
   push:
-    branches: [main]
-    paths: ["**.tf"]
-  pull_request:
-    branches: [main]
-    paths: ["**.tf"]
-  workflow_dispatch:
+    branches: 
+      - main
+    paths: 
+      - "**.tf"
 
 jobs:
   tag:
