@@ -10,6 +10,7 @@ resource "kubernetes_ingress_v1" "http" {
 
     annotations = merge(var.annotations["ingress"], {
       "traefik.ingress.kubernetes.io/router.entrypoints" = "web"
+      "cert-manager.io/issuer"                           = "letsencrypt"
     })
   }
 

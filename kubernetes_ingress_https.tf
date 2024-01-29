@@ -12,6 +12,7 @@ resource "kubernetes_ingress_v1" "https" {
       "traefik.ingress.kubernetes.io/router.entrypoints"      = "web,websecure"
       "traefik.ingress.kubernetes.io/router.tls"              = "true"
       "traefik.ingress.kubernetes.io/router.tls.certresolver" = "default"
+      "cert-manager.io/issuer"                                = "letsencrypt"
     })
   }
 
