@@ -12,13 +12,14 @@ resource "kubernetes_ingress_v1" "https" {
       "traefik.ingress.kubernetes.io/router.entrypoints"      = "web,websecure"
       "traefik.ingress.kubernetes.io/router.tls"              = "true"
       "traefik.ingress.kubernetes.io/router.tls.certresolver" = "default"
-      "cert-manager.io/issuer"                                = "letsencrypt"
+      "cert-manager.io/cluster-issuer"                        = "letsencrypt"
     })
   }
 
   spec {
     tls {
-      hosts = var.domains
+      hosts       = var.domains
+      secret_name = "tls-${var.name}-https"
     }
 
     dynamic "rule" {
