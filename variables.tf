@@ -116,3 +116,9 @@ variable "https" {
   description = "Whether to create an ingress for HTTPS traffic."
   default     = true
 }
+
+variable "allow_from" {
+  type        = list(string)
+  description = "List of services to allow traffic from"
+  default     = []
+}
