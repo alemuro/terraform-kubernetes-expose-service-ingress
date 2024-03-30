@@ -6,6 +6,9 @@ It has been designed to allow pods with only one container. See examples below.
 
 This module has been designed to work on a K3S cluster with Traefik and files stored locally.
 
+It supports cert-manager for creating Let's Encrypt certificates. Take into consideration
+that a ClusterIssuer with name "letsencrypt" should be created before using this module.
+
 ### Supported Ingresses
 
 Currently there is only one ingress supported. Feel free to open PR's to add support for others:
@@ -24,6 +27,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 |------|-------------|------|---------|:--------:|
 | <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
+| <a name="input_allow_from"></a> [allow\_from](#input\_allow\_from) | List of services to allow traffic from | `list(string)` | `[]` | no |
 | <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress supported at the moment. | <pre>object({<br>    ingress = optional(map(string), {})<br>    service = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "ingress": {},<br>  "service": {}<br>}</pre> | no |
 | <a name="input_capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container. | `list(string)` | `[]` | no |
 | <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. | `string` | `"80"` | no |
