@@ -1,6 +1,8 @@
 locals {
   // Get a list of unique PVCs to create a single volume block per PVC
   unique_pvcs = distinct([for pvc in var.pvcs : pvc.name])
+
+  pod_additional_ports_uses_host_port = length([for port in var.pod_additional_ports : port if port.host_port != null]) > 0
 }
 
 resource "kubernetes_deployment" "deployment" {
@@ -23,7 +25,7 @@ resource "kubernetes_deployment" "deployment" {
 
     // When using host_port mode, recreate container
     dynamic "strategy" {
-      for_each = var.host_port != null ? [1] : []
+      for_each = (var.host_port != null || local.pod_additional_ports_uses_host_port) ? [1] : []
       content {
         type = "Recreate"
       }
