@@ -38,8 +38,8 @@ variable "node_selector" {
 }
 variable "container_port" {
   type        = string
-  description = "Container port where to send to requests to."
-  default     = "80"
+  description = "Container port where to send to requests to. If doesn't exist, service won't be created"
+  default     = null
 }
 variable "service_port" {
   type        = string
@@ -98,7 +98,7 @@ variable "annotations" {
     ingress = optional(map(string), {})
     service = optional(map(string), {})
   })
-  description = "Annotations added to some components. Only ingress supported at the moment."
+  description = "Annotations added to some components. Only ingress and service supported at the moment."
   default = {
     ingress = {}
     service = {}

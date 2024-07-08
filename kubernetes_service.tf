@@ -1,4 +1,6 @@
 resource "kubernetes_service" "service" {
+  count = var.container_port != null ? 1 : 0
+
   metadata {
     name      = var.name
     namespace = var.namespace
@@ -21,4 +23,9 @@ resource "kubernetes_service" "service" {
 
     type = "ClusterIP"
   }
+}
+
+moved {
+  from = kubernetes_service.service
+  to   = kubernetes_service.service[0]
 }
