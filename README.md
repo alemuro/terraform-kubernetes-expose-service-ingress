@@ -28,9 +28,9 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
 | <a name="input_allow_from"></a> [allow\_from](#input\_allow\_from) | List of services to allow traffic from | `list(string)` | `[]` | no |
-| <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress supported at the moment. | <pre>object({<br>    ingress = optional(map(string), {})<br>    service = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "ingress": {},<br>  "service": {}<br>}</pre> | no |
+| <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress and service supported at the moment. | <pre>object({<br>    ingress = optional(map(string), {})<br>    service = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "ingress": {},<br>  "service": {}<br>}</pre> | no |
 | <a name="input_capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container. | `list(string)` | `[]` | no |
-| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. | `string` | `"80"` | no |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. If doesn't exist, service won't be created | `string` | `null` | no |
 | <a name="input_domains"></a> [domains](#input\_domains) | List of domains that should be configured to route traffic from. | `list(string)` | `[]` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers. | `map(any)` | `{}` | no |
 | <a name="input_host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
