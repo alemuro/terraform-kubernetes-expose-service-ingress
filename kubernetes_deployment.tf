@@ -91,11 +91,14 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
 
-          port {
-            container_port = var.container_port
-            name           = "http"
-            protocol       = "TCP"
-            host_port      = var.host_port
+          dynamic "port" {
+            for_each = var.container_port != null ? [1] : []
+            content {
+              container_port = var.container_port
+              name           = "http"
+              protocol       = "TCP"
+              host_port      = var.host_port
+            }
           }
 
           dynamic "port" {
