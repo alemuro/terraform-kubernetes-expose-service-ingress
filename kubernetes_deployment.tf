@@ -111,6 +111,9 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
 
+          // Args
+          args = var.args
+
           // Host path volumes
           dynamic "volume_mount" {
             for_each = var.paths

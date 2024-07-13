@@ -122,3 +122,8 @@ variable "allow_from" {
   description = "List of services to allow traffic from"
   default     = []
 }
+variable "args" {
+  type        = list(string)
+  description = "List of arguments to pass to the container"
+  default     = []
+}
