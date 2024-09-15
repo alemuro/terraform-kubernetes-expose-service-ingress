@@ -26,6 +26,11 @@ variable "domains" {
   description = "List of domains that should be configured to route traffic from."
   default     = []
 }
+variable "cloudflare_domains" {
+  type        = list(string)
+  description = "List of domains that should be exposed through Cloudflare Tunnel. Requires the ingress class 'cloudflare-tunnel' to be configured."
+  default     = []
+}
 variable "namespace" {
   type        = string
   description = "Kubernetes namespace where resources must be created."
