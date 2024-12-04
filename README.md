@@ -28,7 +28,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
 | <a name="input_allow_from"></a> [allow\_from](#input\_allow\_from) | List of services to allow traffic from | `list(string)` | `[]` | no |
-| <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress and service supported at the moment. | <pre>object({<br>    ingress = optional(map(string), {})<br>    service = optional(map(string), {})<br>  })</pre> | <pre>{<br>  "ingress": {},<br>  "service": {}<br>}</pre> | no |
+| <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress and service supported at the moment. | <pre>object({<br/>    ingress = optional(map(string), {})<br/>    service = optional(map(string), {})<br/>  })</pre> | <pre>{<br/>  "ingress": {},<br/>  "service": {}<br/>}</pre> | no |
 | <a name="input_args"></a> [args](#input\_args) | List of arguments to pass to the container | `list(string)` | `[]` | no |
 | <a name="input_capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container. | `list(string)` | `[]` | no |
 | <a name="input_cloudflare_domains"></a> [cloudflare\_domains](#input\_cloudflare\_domains) | List of domains that should be exposed through Cloudflare Tunnel. Requires the ingress class 'cloudflare-tunnel' to be configured. | `list(string)` | `[]` | no |
@@ -42,9 +42,10 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
 | <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
-| <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. | <pre>list(object({<br>    name           = string<br>    container_port = string<br>    host_port      = string<br>    protocol       = string<br>  }))</pre> | `[]` | no |
-| <a name="input_pvcs"></a> [pvcs](#input\_pvcs) | Object that contains the list of PVCs to mount in the container | <pre>list(object({<br>    name      = string<br>    path      = string<br>    sub_path  = optional(string, "")<br>    read_only = optional(bool, false)<br>  }))</pre> | `[]` | no |
-| <a name="input_resources"></a> [resources](#input\_resources) | Map with resources limits and requests. | <pre>object({<br>    limits   = map(string)<br>    requests = map(string)<br>  })</pre> | <pre>{<br>  "limits": {},<br>  "requests": {}<br>}</pre> | no |
+| <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. | <pre>list(object({<br/>    name           = string<br/>    container_port = string<br/>    host_port      = string<br/>    protocol       = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_privileged"></a> [privileged](#input\_privileged) | Whether to run the container in privileged mode | `bool` | `false` | no |
+| <a name="input_pvcs"></a> [pvcs](#input\_pvcs) | Object that contains the list of PVCs to mount in the container | <pre>list(object({<br/>    name      = string<br/>    path      = string<br/>    sub_path  = optional(string, "")<br/>    read_only = optional(bool, false)<br/>  }))</pre> | `[]` | no |
+| <a name="input_resources"></a> [resources](#input\_resources) | Map with resources limits and requests. | <pre>object({<br/>    limits   = map(string)<br/>    requests = map(string)<br/>  })</pre> | <pre>{<br/>  "limits": {},<br/>  "requests": {}<br/>}</pre> | no |
 | <a name="input_service_port"></a> [service\_port](#input\_service\_port) | Port configured on the service side to receive requests (routed to the container port). | `string` | `"80"` | no |
 | <a name="input_supplemental_groups"></a> [supplemental\_groups](#input\_supplemental\_groups) | List of supplemental groups to add to the container. | `list(string)` | `[]` | no |
 
