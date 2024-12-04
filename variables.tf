@@ -132,3 +132,9 @@ variable "args" {
   description = "List of arguments to pass to the container"
   default     = []
 }
+
+variable "privileged" {
+  type        = bool
+  description = "Whether to run the container in privileged mode"
+  default     = false
+}

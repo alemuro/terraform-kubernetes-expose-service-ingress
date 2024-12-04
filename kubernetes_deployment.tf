@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "deployment" {
         dynamic "volume" {
           for_each = var.paths
           content {
-            name = "${var.name}-data-${replace(volume.key, "/", "-")}"
+            name = lower("${var.name}-data-${replace(volume.key, "/", "-")}")
             host_path {
               path = volume.key
             }
@@ -118,7 +118,7 @@ resource "kubernetes_deployment" "deployment" {
           dynamic "volume_mount" {
             for_each = var.paths
             content {
-              name       = "${var.name}-data-${replace(volume_mount.key, "/", "-")}"
+              name       = lower("${var.name}-data-${replace(volume_mount.key, "/", "-")}")
               mount_path = volume_mount.value
             }
           }
@@ -127,7 +127,7 @@ resource "kubernetes_deployment" "deployment" {
           dynamic "volume_mount" {
             for_each = var.pvcs
             content {
-              name       = "${var.name}-data-${volume_mount.value.name}"
+              name       = "${var.name}-data-${lower(volume_mount.value.name)}"
               mount_path = volume_mount.value.path
               sub_path   = volume_mount.value.sub_path
               read_only  = volume_mount.value.read_only
@@ -135,10 +135,15 @@ resource "kubernetes_deployment" "deployment" {
           }
 
           dynamic "security_context" {
-            for_each = length(var.capabilities_add) > 0 ? [1] : []
+            for_each = length(var.capabilities_add) > 0 || var.privileged ? [1] : []
             content {
-              capabilities {
-                add = var.capabilities_add
+              privileged = var.privileged
+
+              dynamic "capabilities" {
+                for_each = length(var.capabilities_add) > 0 ? [1] : []
+                content {
+                  add = var.capabilities_add
+                } 
               }
             }
           }
