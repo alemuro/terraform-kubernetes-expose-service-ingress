@@ -65,6 +65,17 @@ resource "kubernetes_deployment" "deployment" {
           }
         }
 
+        // Configmaps
+        dynamic "volume" {
+          for_each = length(var.configmaps) > 0 ? [1] : []
+          content {
+            name = "config"
+            config_map {
+              name = kubernetes_config_map_v1.configmap[0].metadata[0].name
+            }
+          }
+        }
+
         dynamic "image_pull_secrets" {
           for_each = var.image_pull_secret != "" ? [1] : []
           content {
@@ -145,6 +156,18 @@ resource "kubernetes_deployment" "deployment" {
                   add = var.capabilities_add
                 } 
               }
+            }
+          }
+
+          // Configmap
+          dynamic "volume_mount" {
+            for_each = var.configmaps
+            iterator = configmap
+            content {
+              name       = "config"
+              mount_path = configmap.key
+              sub_path = replace(trimprefix(configmap.key, "/"), "/", "-")
+              read_only = true
             }
           }
 

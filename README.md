@@ -32,6 +32,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_args"></a> [args](#input\_args) | List of arguments to pass to the container | `list(string)` | `[]` | no |
 | <a name="input_capabilities_add"></a> [capabilities\_add](#input\_capabilities\_add) | List of capabilities to add to the container. | `list(string)` | `[]` | no |
 | <a name="input_cloudflare_domains"></a> [cloudflare\_domains](#input\_cloudflare\_domains) | List of domains that should be exposed through Cloudflare Tunnel. Requires the ingress class 'cloudflare-tunnel' to be configured. | `list(string)` | `[]` | no |
+| <a name="input_configmaps"></a> [configmaps](#input\_configmaps) | Map with configmaps to mount in the container, where the key is the<br/>path where it should be mounted and the value is the content | `map(string)` | `{}` | no |
 | <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. If doesn't exist, service won't be created | `string` | `null` | no |
 | <a name="input_domains"></a> [domains](#input\_domains) | List of domains that should be configured to route traffic from. | `list(string)` | `[]` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers. | `map(any)` | `{}` | no |

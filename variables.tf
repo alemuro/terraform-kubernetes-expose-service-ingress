@@ -138,3 +138,12 @@ variable "privileged" {
   description = "Whether to run the container in privileged mode"
   default     = false
 }
+
+variable "configmaps" {
+  type = map(string)
+  description = <<-EOF
+    Map with configmaps to mount in the container, where the key is the
+    path where it should be mounted and the value is the content
+  EOF
+  default = {}
+}
