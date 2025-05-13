@@ -1,5 +1,5 @@
-resource "kubernetes_deployment" "deployment" {
-  count = local.use_statefulset ? 0 : 1
+resource "kubernetes_stateful_set_v1" "statefulset" {
+  count = local.use_statefulset ? 1 : 0
 
   metadata {
     name      = var.name
@@ -10,19 +10,13 @@ resource "kubernetes_deployment" "deployment" {
   }
 
   spec {
+    service_name = kubernetes_service.service[0].metadata[0].name
+
     replicas = 1
 
     selector {
       match_labels = {
         k8s-app = var.name
-      }
-    }
-
-    // When using host_port mode, recreate container
-    dynamic "strategy" {
-      for_each = (var.host_port != null || local.pod_additional_ports_uses_host_port) ? [1] : []
-      content {
-        type = "Recreate"
       }
     }
 
@@ -174,9 +168,4 @@ resource "kubernetes_deployment" "deployment" {
       }
     }
   }
-}
-
-moved {
-  from = kubernetes_deployment.deployment
-  to   = kubernetes_deployment.deployment[0]
 }

@@ -9,6 +9,9 @@ This module has been designed to work on a K3S cluster with Traefik and files st
 It supports cert-manager for creating Let's Encrypt certificates. Take into consideration
 that a ClusterIssuer with name "letsencrypt" should be created before using this module.
 
+This module creates a StatefulSet or a Deployment depending on some conditions.
+Check `use_statefulset` local variable conditions.
+
 ### Supported Ingresses
 
 Currently there is only one ingress supported. Feel free to open PR's to add support for others:
