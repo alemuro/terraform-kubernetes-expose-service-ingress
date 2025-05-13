@@ -140,10 +140,10 @@ variable "privileged" {
 }
 
 variable "configmaps" {
-  type = map(string)
+  type        = map(string)
   description = <<-EOF
     Map with configmaps to mount in the container, where the key is the
     path where it should be mounted and the value is the content
   EOF
-  default = {}
+  default     = {}
 }
