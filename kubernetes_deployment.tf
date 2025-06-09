@@ -37,6 +37,8 @@ resource "kubernetes_deployment" "deployment" {
 
         node_selector = var.node_selector
 
+        host_network = var.host_network
+
         // Host path volumes
         dynamic "volume" {
           for_each = var.paths
