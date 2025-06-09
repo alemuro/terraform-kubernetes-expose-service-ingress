@@ -31,6 +31,11 @@ variable "cloudflare_domains" {
   description = "List of domains that should be exposed through Cloudflare Tunnel. Requires the ingress class 'cloudflare-tunnel' to be configured."
   default     = []
 }
+variable "host_network" {
+  type        = bool
+  description = "Whether to run the container in host network mode. Defaults to false."
+  default     = false
+}
 variable "namespace" {
   type        = string
   description = "Kubernetes namespace where resources must be created."
