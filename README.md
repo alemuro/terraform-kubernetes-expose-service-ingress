@@ -40,6 +40,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
 | <a name="input_http"></a> [http](#input\_http) | Whether to create an ingress for HTTP traffic. | `bool` | `true` | no |
 | <a name="input_https"></a> [https](#input\_https) | Whether to create an ingress for HTTPS traffic. | `bool` | `true` | no |
+| <a name="input_image_pull_policy"></a> [image\_pull\_policy](#input\_image\_pull\_policy) | Image pull policy. Defaults to provider behavior when empty. | `string` | `""` | no |
 | <a name="input_image_pull_secret"></a> [image\_pull\_secret](#input\_image\_pull\_secret) | Kubernetes secret storing registry credentials. | `string` | `""` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
