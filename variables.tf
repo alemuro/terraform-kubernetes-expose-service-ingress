@@ -6,6 +6,11 @@ variable "image" {
   type        = string
   description = "Image name and tag to deploy."
 }
+variable "image_pull_policy" {
+  type        = string
+  description = "Image pull policy. Defaults to IfNotPresent."
+  default     = "IfNotPresent"
+}
 variable "paths" {
   type        = map(any)
   description = "Object mapping local paths to container paths"

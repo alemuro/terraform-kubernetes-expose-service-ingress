@@ -80,8 +80,9 @@ resource "kubernetes_stateful_set_v1" "statefulset" {
         }
 
         container {
-          image = var.image
-          name  = var.name
+          image             = var.image
+          image_pull_policy = var.image_pull_policy
+          name              = var.name
 
           dynamic "env" {
             for_each = var.environment_variables
