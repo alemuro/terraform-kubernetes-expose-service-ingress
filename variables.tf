@@ -8,8 +8,8 @@ variable "image" {
 }
 variable "image_pull_policy" {
   type        = string
-  description = "Image pull policy. Defaults to IfNotPresent."
-  default     = "IfNotPresent"
+  description = "Image pull policy. Defaults to provider behavior when empty."
+  default     = ""
 }
 variable "paths" {
   type        = map(any)
