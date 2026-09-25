@@ -187,6 +187,10 @@ variable "liveness_probe" {
   })
   description = "Liveness probe. Set exactly one of http_get or tcp_socket. Disabled when null."
   default     = null
+  validation {
+    condition     = var.liveness_probe == null ? true : (var.liveness_probe.http_get == null) != (var.liveness_probe.tcp_socket == null)
+    error_message = "liveness_probe needs exactly one of http_get or tcp_socket."
+  }
 }
 variable "readiness_probe" {
   type = object({
@@ -204,6 +208,10 @@ variable "readiness_probe" {
   })
   description = "Readiness probe. Set exactly one of http_get or tcp_socket. Disabled when null."
   default     = null
+  validation {
+    condition     = var.readiness_probe == null ? true : (var.readiness_probe.http_get == null) != (var.readiness_probe.tcp_socket == null)
+    error_message = "readiness_probe needs exactly one of http_get or tcp_socket."
+  }
 }
 variable "startup_probe" {
   type = object({
@@ -221,4 +229,8 @@ variable "startup_probe" {
   })
   description = "Startup probe, for slow-starting apps. Set exactly one of http_get or tcp_socket. Disabled when null."
   default     = null
+  validation {
+    condition     = var.startup_probe == null ? true : (var.startup_probe.http_get == null) != (var.startup_probe.tcp_socket == null)
+    error_message = "startup_probe needs exactly one of http_get or tcp_socket."
+  }
 }

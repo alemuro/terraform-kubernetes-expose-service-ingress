@@ -1,6 +1,13 @@
 resource "kubernetes_deployment" "deployment" {
   count = local.use_statefulset ? 0 : 1
 
+  lifecycle {
+    precondition {
+      condition     = var.container_port != null || !local.probes_need_http_port
+      error_message = "A probe without a port needs container_port, which defines the \"http\" port it defaults to."
+    }
+  }
+
   metadata {
     name      = var.name
     namespace = var.namespace

@@ -14,4 +14,10 @@ locals {
     var.deployment_strategy,
     (var.host_port != null || local.pod_additional_ports_uses_host_port || length(var.pvcs) > 0) ? "Recreate" : "RollingUpdate",
   )
+
+  // Probes without an explicit port target the "http" container port, which only exists with container_port.
+  probes_need_http_port = anytrue([
+    for probe in [var.liveness_probe, var.readiness_probe, var.startup_probe] :
+    probe != null && try(probe.http_get.port, probe.tcp_socket.port, null) == null
+  ])
 }

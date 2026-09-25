@@ -1,6 +1,13 @@
 resource "kubernetes_stateful_set_v1" "statefulset" {
   count = local.use_statefulset ? 1 : 0
 
+  lifecycle {
+    precondition {
+      condition     = var.container_port != null || !local.probes_need_http_port
+      error_message = "A probe without a port needs container_port, which defines the \"http\" port it defaults to."
+    }
+  }
+
   metadata {
     name      = var.name
     namespace = var.namespace
@@ -10,7 +17,7 @@ resource "kubernetes_stateful_set_v1" "statefulset" {
   }
 
   spec {
-    service_name = kubernetes_service.service[0].metadata[0].name
+    service_name = var.name
 
     replicas = 1
 
