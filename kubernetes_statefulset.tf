@@ -165,6 +165,75 @@ resource "kubernetes_stateful_set_v1" "statefulset" {
             limits   = var.resources.limits
             requests = var.resources.requests
           }
+
+          dynamic "liveness_probe" {
+            for_each = var.liveness_probe != null ? [var.liveness_probe] : []
+            content {
+              dynamic "http_get" {
+                for_each = liveness_probe.value.http_get != null ? [liveness_probe.value.http_get] : []
+                content {
+                  path = http_get.value.path
+                  port = coalesce(http_get.value.port, "http")
+                }
+              }
+              dynamic "tcp_socket" {
+                for_each = liveness_probe.value.tcp_socket != null ? [liveness_probe.value.tcp_socket] : []
+                content {
+                  port = coalesce(tcp_socket.value.port, "http")
+                }
+              }
+              initial_delay_seconds = liveness_probe.value.initial_delay_seconds
+              period_seconds        = liveness_probe.value.period_seconds
+              timeout_seconds       = liveness_probe.value.timeout_seconds
+              failure_threshold     = liveness_probe.value.failure_threshold
+            }
+          }
+
+          dynamic "readiness_probe" {
+            for_each = var.readiness_probe != null ? [var.readiness_probe] : []
+            content {
+              dynamic "http_get" {
+                for_each = readiness_probe.value.http_get != null ? [readiness_probe.value.http_get] : []
+                content {
+                  path = http_get.value.path
+                  port = coalesce(http_get.value.port, "http")
+                }
+              }
+              dynamic "tcp_socket" {
+                for_each = readiness_probe.value.tcp_socket != null ? [readiness_probe.value.tcp_socket] : []
+                content {
+                  port = coalesce(tcp_socket.value.port, "http")
+                }
+              }
+              initial_delay_seconds = readiness_probe.value.initial_delay_seconds
+              period_seconds        = readiness_probe.value.period_seconds
+              timeout_seconds       = readiness_probe.value.timeout_seconds
+              failure_threshold     = readiness_probe.value.failure_threshold
+            }
+          }
+
+          dynamic "startup_probe" {
+            for_each = var.startup_probe != null ? [var.startup_probe] : []
+            content {
+              dynamic "http_get" {
+                for_each = startup_probe.value.http_get != null ? [startup_probe.value.http_get] : []
+                content {
+                  path = http_get.value.path
+                  port = coalesce(http_get.value.port, "http")
+                }
+              }
+              dynamic "tcp_socket" {
+                for_each = startup_probe.value.tcp_socket != null ? [startup_probe.value.tcp_socket] : []
+                content {
+                  port = coalesce(tcp_socket.value.port, "http")
+                }
+              }
+              initial_delay_seconds = startup_probe.value.initial_delay_seconds
+              period_seconds        = startup_probe.value.period_seconds
+              timeout_seconds       = startup_probe.value.timeout_seconds
+              failure_threshold     = startup_probe.value.failure_threshold
+            }
+          }
         }
       }
     }

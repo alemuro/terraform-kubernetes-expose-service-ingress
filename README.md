@@ -25,8 +25,6 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
 | <a name="input_allow_from"></a> [allow\_from](#input\_allow\_from) | List of services to allow traffic from | `list(string)` | `[]` | no |
 | <a name="input_annotations"></a> [annotations](#input\_annotations) | Annotations added to some components. Only ingress and service supported at the moment. | <pre>object({<br/>    ingress = optional(map(string), {})<br/>    service = optional(map(string), {})<br/>  })</pre> | <pre>{<br/>  "ingress": {},<br/>  "service": {}<br/>}</pre> | no |
 | <a name="input_args"></a> [args](#input\_args) | List of arguments to pass to the container | `list(string)` | `[]` | no |
@@ -34,22 +32,29 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_cloudflare_domains"></a> [cloudflare\_domains](#input\_cloudflare\_domains) | List of domains that should be exposed through Cloudflare Tunnel. Requires the ingress class 'cloudflare-tunnel' to be configured. | `list(string)` | `[]` | no |
 | <a name="input_configmaps"></a> [configmaps](#input\_configmaps) | Map with configmaps to mount in the container, where the key is the<br/>path where it should be mounted and the value is the content | `map(string)` | `{}` | no |
 | <a name="input_container_port"></a> [container\_port](#input\_container\_port) | Container port where to send to requests to. If doesn't exist, service won't be created | `string` | `null` | no |
+| <a name="input_deployment_strategy"></a> [deployment\_strategy](#input\_deployment\_strategy) | Deployment strategy, "Recreate" or "RollingUpdate". Defaults to Recreate when the pod uses a host port or mounts PVCs, RollingUpdate otherwise. | `string` | `null` | no |
 | <a name="input_domains"></a> [domains](#input\_domains) | List of domains that should be configured to route traffic from. | `list(string)` | `[]` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Map with environment variables injected to the containers. | `map(any)` | `{}` | no |
 | <a name="input_host_network"></a> [host\_network](#input\_host\_network) | Whether to run the container in host network mode. Defaults to false. | `bool` | `false` | no |
 | <a name="input_host_port"></a> [host\_port](#input\_host\_port) | Host port where to send to requests to. | `string` | `null` | no |
 | <a name="input_http"></a> [http](#input\_http) | Whether to create an ingress for HTTP traffic. | `bool` | `true` | no |
 | <a name="input_https"></a> [https](#input\_https) | Whether to create an ingress for HTTPS traffic. | `bool` | `true` | no |
+| <a name="input_image"></a> [image](#input\_image) | Image name and tag to deploy. | `string` | n/a | yes |
 | <a name="input_image_pull_policy"></a> [image\_pull\_policy](#input\_image\_pull\_policy) | Image pull policy. Defaults to provider behavior when empty. | `string` | `""` | no |
 | <a name="input_image_pull_secret"></a> [image\_pull\_secret](#input\_image\_pull\_secret) | Kubernetes secret storing registry credentials. | `string` | `""` | no |
+| <a name="input_liveness_probe"></a> [liveness\_probe](#input\_liveness\_probe) | Liveness probe (`http_get` or `tcp_socket`, port defaults to the `http` container port). Disabled when null. | `object` | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name used to identify deployed container and all related resources. | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
 | <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
 | <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. | <pre>list(object({<br/>    name           = string<br/>    container_port = string<br/>    host_port      = string<br/>    protocol       = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_privileged"></a> [privileged](#input\_privileged) | Whether to run the container in privileged mode | `bool` | `false` | no |
 | <a name="input_pvcs"></a> [pvcs](#input\_pvcs) | Object that contains the list of PVCs to mount in the container | <pre>list(object({<br/>    name      = string<br/>    path      = string<br/>    sub_path  = optional(string, "")<br/>    read_only = optional(bool, false)<br/>  }))</pre> | `[]` | no |
+| <a name="input_readiness_probe"></a> [readiness\_probe](#input\_readiness\_probe) | Readiness probe, same shape as `liveness_probe`. Disabled when null. | `object` | `null` | no |
 | <a name="input_resources"></a> [resources](#input\_resources) | Map with resources limits and requests. | <pre>object({<br/>    limits   = map(string)<br/>    requests = map(string)<br/>  })</pre> | <pre>{<br/>  "limits": {},<br/>  "requests": {}<br/>}</pre> | no |
 | <a name="input_service_port"></a> [service\_port](#input\_service\_port) | Port configured on the service side to receive requests (routed to the container port). | `string` | `"80"` | no |
+| <a name="input_startup_probe"></a> [startup\_probe](#input\_startup\_probe) | Startup probe, same shape as `liveness_probe`. Disabled when null. | `object` | `null` | no |
+| <a name="input_statefulset"></a> [statefulset](#input\_statefulset) | Deploy as a StatefulSet (true) or a Deployment (false). Defaults to a StatefulSet when `paths` is set and `container_port` is not null. | `bool` | `null` | no |
 | <a name="input_supplemental_groups"></a> [supplemental\_groups](#input\_supplemental\_groups) | List of supplemental groups to add to the container. | `list(string)` | `[]` | no |
 
 ## Outputs

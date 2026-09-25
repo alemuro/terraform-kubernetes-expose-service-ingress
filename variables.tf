@@ -157,3 +157,68 @@ variable "configmaps" {
   EOF
   default     = {}
 }
+variable "deployment_strategy" {
+  type        = string
+  description = "Deployment strategy, \"Recreate\" or \"RollingUpdate\". Defaults to Recreate when the pod uses a host port or mounts PVCs, RollingUpdate otherwise."
+  default     = null
+  validation {
+    condition     = var.deployment_strategy == null ? true : contains(["Recreate", "RollingUpdate"], var.deployment_strategy)
+    error_message = "deployment_strategy must be Recreate or RollingUpdate."
+  }
+}
+variable "statefulset" {
+  type        = bool
+  description = "Deploy as a StatefulSet (true) or a Deployment (false). Defaults to a StatefulSet when `paths` is set and `container_port` is not null, as before."
+  default     = null
+}
+variable "liveness_probe" {
+  type = object({
+    http_get = optional(object({
+      path = optional(string, "/")
+      port = optional(string) // defaults to the "http" container port
+    }))
+    tcp_socket = optional(object({
+      port = optional(string) // defaults to the "http" container port
+    }))
+    initial_delay_seconds = optional(number, 0)
+    period_seconds        = optional(number, 10)
+    timeout_seconds       = optional(number, 1)
+    failure_threshold     = optional(number, 3)
+  })
+  description = "Liveness probe. Set exactly one of http_get or tcp_socket. Disabled when null."
+  default     = null
+}
+variable "readiness_probe" {
+  type = object({
+    http_get = optional(object({
+      path = optional(string, "/")
+      port = optional(string) // defaults to the "http" container port
+    }))
+    tcp_socket = optional(object({
+      port = optional(string) // defaults to the "http" container port
+    }))
+    initial_delay_seconds = optional(number, 0)
+    period_seconds        = optional(number, 10)
+    timeout_seconds       = optional(number, 1)
+    failure_threshold     = optional(number, 3)
+  })
+  description = "Readiness probe. Set exactly one of http_get or tcp_socket. Disabled when null."
+  default     = null
+}
+variable "startup_probe" {
+  type = object({
+    http_get = optional(object({
+      path = optional(string, "/")
+      port = optional(string) // defaults to the "http" container port
+    }))
+    tcp_socket = optional(object({
+      port = optional(string) // defaults to the "http" container port
+    }))
+    initial_delay_seconds = optional(number, 0)
+    period_seconds        = optional(number, 10)
+    timeout_seconds       = optional(number, 1)
+    failure_threshold     = optional(number, 3)
+  })
+  description = "Startup probe, for slow-starting apps. Set exactly one of http_get or tcp_socket. Disabled when null."
+  default     = null
+}
