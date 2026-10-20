@@ -121,6 +121,7 @@ resource "kubernetes_deployment" "deployment" {
               name           = port.value.name
               protocol       = port.value.protocol
               host_port      = port.value.host_port
+              host_ip        = port.value.host_ip
             }
           }
 

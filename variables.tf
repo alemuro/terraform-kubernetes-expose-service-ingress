@@ -98,8 +98,11 @@ variable "pod_additional_ports" {
     container_port = string
     host_port      = string
     protocol       = string
+    // Binds the host port to one node address. Unset, the hostPort rule also catches loopback,
+    // e.g. systemd-resolved on 127.0.0.53 for a DNS server on port 53.
+    host_ip = optional(string)
   }))
-  description = "List of additional ports to expose on the pod."
+  description = "List of additional ports to expose on the pod. `host_ip` restricts a host port to one node address."
   default     = []
 }
 variable "image_pull_secret" {

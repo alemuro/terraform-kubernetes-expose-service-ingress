@@ -19,7 +19,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 
 | Name | Version |
 |------|---------|
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | n/a |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 3.2.1 |
 
 ## Inputs
 
@@ -47,7 +47,7 @@ Currently there is only one ingress supported. Feel free to open PR's to add sup
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace where resources must be created. | `string` | `"default"` | no |
 | <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector to use when deploying the container. | `map(string)` | `null` | no |
 | <a name="input_paths"></a> [paths](#input\_paths) | Object mapping local paths to container paths | `map(any)` | `{}` | no |
-| <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. | <pre>list(object({<br/>    name           = string<br/>    container_port = string<br/>    host_port      = string<br/>    protocol       = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_pod_additional_ports"></a> [pod\_additional\_ports](#input\_pod\_additional\_ports) | List of additional ports to expose on the pod. `host_ip` restricts a host port to one node address. | <pre>list(object({<br/>    name           = string<br/>    container_port = string<br/>    host_port      = string<br/>    protocol       = string<br/>    // Binds the host port to one node address. Unset, the hostPort rule also catches loopback,<br/>    // e.g. systemd-resolved on 127.0.0.53 for a DNS server on port 53.<br/>    host_ip = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_privileged"></a> [privileged](#input\_privileged) | Whether to run the container in privileged mode | `bool` | `false` | no |
 | <a name="input_pvcs"></a> [pvcs](#input\_pvcs) | Object that contains the list of PVCs to mount in the container | <pre>list(object({<br/>    name      = string<br/>    path      = string<br/>    sub_path  = optional(string, "")<br/>    read_only = optional(bool, false)<br/>  }))</pre> | `[]` | no |
 | <a name="input_readiness_probe"></a> [readiness\_probe](#input\_readiness\_probe) | Readiness probe. Set exactly one of http\_get or tcp\_socket. Disabled when null. | <pre>object({<br/>    http_get = optional(object({<br/>      path = optional(string, "/")<br/>      port = optional(string) // defaults to the "http" container port<br/>    }))<br/>    tcp_socket = optional(object({<br/>      port = optional(string) // defaults to the "http" container port<br/>    }))<br/>    initial_delay_seconds = optional(number, 0)<br/>    period_seconds        = optional(number, 10)<br/>    timeout_seconds       = optional(number, 1)<br/>    failure_threshold     = optional(number, 3)<br/>  })</pre> | `null` | no |

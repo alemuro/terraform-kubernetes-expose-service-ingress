@@ -116,6 +116,7 @@ resource "kubernetes_stateful_set_v1" "statefulset" {
               name           = port.value.name
               protocol       = port.value.protocol
               host_port      = port.value.host_port
+              host_ip        = port.value.host_ip
             }
           }
 
